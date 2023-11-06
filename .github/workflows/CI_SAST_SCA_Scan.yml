@@ -1,0 +1,20 @@
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  Build_with_Maven:
+    uses: gp-hub321/DevOps_repo2_assessment_2/.github/workflows/MavenBuildTemplate.yml@develop
+    with:
+      file_path: \pom.xml
+  Secret_Scan_Temp:
+    uses: gp-hub321/DevOps_repo2_assessment_2/.github/workflows/SecretScanTemplate.yml@develop
+  SCA_Scan_OWASP_DC:
+    uses: gp-hub321/DevOps_repo2_assessment_2/.github/workflows/SCAScanTemplate.yml@develop
+  SAST_Scan_FindSecBug:
+    uses: gp-hub321/DevOps_repo2_assessment_2/.github/workflows/SASTScanTemplate.yml@develop
+      
+    
