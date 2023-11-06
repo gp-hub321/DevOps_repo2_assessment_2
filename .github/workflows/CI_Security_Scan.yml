@@ -1,0 +1,19 @@
+# Workflow to build the project and perform secret scan, SCA and SAST scans.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  Build_Project_with_Maven:
+    uses: gp-hub321/DevOps_repo2_assessment_2/.github/workflows/Mavenbuildtemplate.yml@develop
+    with:
+      file_path: \pom.xml
+  Secret_Scan_using_template:
+    uses: gp-hub321/DevOps_repo2_assessment_2/.github/workflows/SecretScanningTemplate.yml@develop
+  SCA_Scan_With_OWASP_DC:
+    uses: gp-hub321/DevOps_repo2_assessment_2/.github/workflows/SCATemplate.yml@develop
+  SAST_Scan_Using_FindSecBugs:
+    uses: gp-hub321/DevOps_repo2_assessment_2/.github/workflows/SASTTemplate.yml@develop
+    
