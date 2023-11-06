@@ -1,0 +1,37 @@
+on:
+    push:
+        branches: [develop]
+    workflow_call:
+        inputs:
+            file_path:
+                required: false
+                type: string
+
+jobs:
+    SASTScanUsingFindSecBugs:
+      runs-on: ubuntu-latest
+      steps:
+      -  name: Checkout codebase
+         uses: actions/checkout@v3
+      -  name: Build with Maven
+         uses: gp-hub321/DevOps_repo2_assessment_2/.github/workflows/Mavenbuildtemplate.yml@develop
+         env:
+             POM.XML_Location: ${{vars.POM_LOCATION}}
+         with:
+            file_path: $env:POM.XML_Location
+      -  name: Install FindSecBugs
+         run: |
+           wget -q -O findsecbugs-cli.zip https://github.com/find-sec-bugs/find-sec-bugs/releases/download/version-1.12.0/findsecbugs-cli-1.12.0.zip
+           unzip -qq findsecbugs-cli.zip
+           chmod 755 findsecbugs.sh
+           chmod +x findsecbugs.sh
+           ls -l
+           
+      -  name: Run FindSecBugs
+         run: ./findsecbugs.sh -progress -output findsecbugs-results.html -html target/*.jar
+         
+      -  name: Save Report into Artifactory
+         uses: actions/upload-artifact@v2
+         with:
+           name: findsecbugs-report
+           path: findsecbugs-results.html
