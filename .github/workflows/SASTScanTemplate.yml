@@ -8,9 +8,7 @@ on:
                 type: string
 
 jobs:
-    checkout:
-        uses: gp-hub321/DevOps_repo2_assessment_2/.github/workflows/MavenBuildTemplate.yml@develop
-    SASTScanUsingFindSecBugs:
+     SASTScanUsingFindSecBugs:
       runs-on: ubuntu-latest
       steps:
       -  name: Checkout codebase
